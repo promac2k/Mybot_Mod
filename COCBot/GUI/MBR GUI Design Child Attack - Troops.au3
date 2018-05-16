@@ -23,7 +23,7 @@ Global $g_ahTxtTrainArmyTroopCount[$eTroopCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 Global $g_ahLblTrainArmyTroopLevel[$eTroopCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_ahTxtTrainArmySpellCount[$eSpellCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_ahLblTrainArmySpellLevel[$eSpellCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-Global $g_hTxtFullTroop = 0, $g_hChkTotalCampForced = 0, $g_hTxtTotalCampForced = 0, $g_hChkForceBrewBeforeAttack = 0
+Global $g_hTxtFullTroop = 0, $g_hChkTotalCampForced = 0, $g_hTxtTotalCampForced = 0, $g_hChkForceBrewBeforeAttack = 0, $g_hChkDoubleTrain = 0
 
 Global $g_hGrpTrainTroops = 0, $g_hGrpCookSpell = 0
 Global $g_ahPicTrainArmyTroop[$eTroopCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -491,6 +491,9 @@ Func CreateTroopsSpellsSubTab()
 			;GUICtrlSetBkColor(-1, $COLOR_MONEYGREEN) ;lime, moneygreen
 			GUICtrlSetData(-1, "0|2|4|6|7|8|9|10|11", "0")
 			GUICtrlSetOnEvent(-1, "TotalSpellCountClick")
+
+		; DoubleTrain - Demen
+		$g_hChkDoubleTrain = GUICtrlCreateCheckbox("Double Train Army", $x + 275, $y, -1, 15)
 
 	$y += 13
 		; Lightning

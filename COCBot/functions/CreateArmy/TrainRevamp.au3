@@ -32,7 +32,10 @@ Func TrainRevamp()
 	EndIf
 
 	If Not $g_bQuickTrainEnable Then
-		TrainRevampOldStyle()
+		If ProfileSwitchAccountEnabled() Then $g_bDoubleTrainDone = $g_abDoubleTrainDone[$g_iCurAccount]
+		If $g_bIsFullArmywithHeroesAndSpells And $g_bDoubleTrainDone Then $g_bDoubleTrainDone = False
+		If Not $g_bDoubleTrainDone Or Not $g_bDoubleTrain Then TrainRevampOldStyle()
+		DoubleTrain()
 		Return
 	EndIf
 
@@ -1186,7 +1189,7 @@ Func RemoveExtraTroopsQueue() ; Will remove All Extra troops in queue If there's
 	;Local $x = 834
 	If $g_bIsFullArmywithHeroesAndSpells Then Return True
 
-	Local Const $y = 259, $yRemoveBtn = 200, $xDecreaseRemoveBtn = 10
+	Local Const $y = 186, $yRemoveBtn = 200, $xDecreaseRemoveBtn = 10
 	Local $bColorCheck = False, $bGotRemoved = False
 	For $x = 834 To 58 Step -70
 		If Not $g_bRunState Then Return
