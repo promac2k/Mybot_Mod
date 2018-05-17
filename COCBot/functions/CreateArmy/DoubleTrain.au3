@@ -72,7 +72,7 @@ Func DoubleTrain()
 		If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("$SpellCamp[1]: " & $SpellCamp[1] & ", $TotalSpellToBrew: " & $TotalSpellToBrew, $COLOR_DEBUG)
 		If $bSetlog Or $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Checking Spell tab: " & $SpellCamp[0] & "/" & $TotalSpellToBrew * 2)
 
-		If $SpellCamp[0] <= $TotalSpellToBrew Then ; 10/22
+		If $SpellCamp[0] < $TotalSpellToBrew Then ; 10/22
 			DeleteQueued("Spells")
 			$bNeedReCheckSpellTab = True
 			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". DeleteQueued('Spells'). $bNeedReCheckSpellTab: " & $bNeedReCheckSpellTab, $COLOR_DEBUG)
@@ -190,3 +190,76 @@ Func TrainFullQueue($bSpellOnly = False, $bSetlog = True)
 	EndIf
 
 EndFunc   ;==>TrainFullQueue
+
+Func DoubleQuickTrain()
+
+	If Not $g_bDoubleTrain Or $g_bIsFullArmywithHeroesAndSpells Then Return
+
+	Local $bSetlog = True
+	If $g_bDoubleTrainDone Then $bSetlog = False
+
+	If $bSetlog Then SetLog("Double quick train army")
+
+	Local $bDoubleTrainTroop = False, $bDoubleTrainSpell = False
+
+	; Troop
+	OpenTroopsTab(False, "DoubleQuickTrain()")
+	If _Sleep(250) Then Return
+
+	Local $Step = 1
+	While 1
+		Local $TroopCamp = GetOCRCurrent(43, 160)
+		If $bSetlog Or $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Checking Troop tab: " & $TroopCamp[0] & "/" & $TroopCamp[1] * 2)
+		If $TroopCamp[0] > $TroopCamp[1] And $TroopCamp[0] < $TroopCamp[1] * 2 Then ; 500/520
+			RemoveExtraTroopsQueue()
+			If _Sleep(500) Then Return
+			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". RemoveExtraTroopsQueue()", $COLOR_DEBUG)
+			$Step += 1
+			If $Step = 3 Then ExitLoop
+			ContinueLoop
+		ElseIf $TroopCamp[0] = $TroopCamp[1] * 2 Then
+			$bDoubleTrainTroop = True
+			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". $bDoubleTrainTroop: " & $bDoubleTrainTroop, $COLOR_DEBUG)
+		EndIf
+		ExitLoop
+	WEnd
+
+	; Spell
+	OpenSpellsTab(False, "DoubleQuickTrain()")
+	If _Sleep(250) Then Return
+	$Step = 1
+	While 1
+		Local $SpellCamp = GetOCRCurrent(43, 160)
+		If $bSetlog Or $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Checking Spell tab: " & $SpellCamp[0] & "/" & $SpellCamp[1] * 2)
+		If $SpellCamp[1] = 0 Then $bDoubleTrainSpell = True
+		If $SpellCamp[0] > $SpellCamp[1] And $SpellCamp[0] < $SpellCamp[1] * 2 Then ; 20/22
+			RemoveExtraTroopsQueue()
+			If _Sleep(500) Then Return
+			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". RemoveExtraTroopsQueue()", $COLOR_DEBUG)
+			$Step += 1
+			If $Step = 3 Then ExitLoop
+			ContinueLoop
+		ElseIf $SpellCamp[0] = $SpellCamp[1] * 2 Then
+			$bDoubleTrainSpell = True
+			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". $bDoubleTrainSpell: " & $bDoubleTrainSpell, $COLOR_DEBUG)
+		EndIf
+		ExitLoop
+	WEnd
+
+	If Not $bDoubleTrainTroop Or Not $bDoubleTrainSpell Then
+		OpenQuickTrainTab(False, "DoubleQuickTrain()")
+		If _Sleep(500) Then Return
+		Local $iMultiClick = 1
+		If $g_bChkMultiClick Then $iMultiClick = _Max(Ceiling(($SpellCamp[1] * 2 - $SpellCamp[0]) / 2), 1)
+		TrainArmyNumber($g_bQuickTrainArmy, $iMultiClick)
+	Else
+		If $bSetlog Or $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Full queue, skip Double Quick Train")
+	EndIf
+
+	If _Sleep(250) Then Return
+
+	$g_bDoubleTrainDone = True
+	If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("$g_bDoubleTrainDone: " & $g_bDoubleTrainDone, $COLOR_DEBUG)
+	If ProfileSwitchAccountEnabled() Then $g_abDoubleTrainDone[$g_iCurAccount] = $g_bDoubleTrainDone
+
+EndFunc   ;==>DoubleQuickTrain

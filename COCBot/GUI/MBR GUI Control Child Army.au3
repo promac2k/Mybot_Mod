@@ -27,6 +27,7 @@ Func chkUseQTrain()
 		GUICtrlSetData($g_hLblElixirCostSpell, "0")
 		GUICtrlSetData($g_hLblDarkCostSpell, "0")
 	Else
+		chkQuickTrainCombo()
 		_GUI_Value_STATE("DISABLE", $g_ahChkArmy[0] & "#" & $g_ahChkArmy[1] & "#" & $g_ahChkArmy[2])
 		_GUI_Value_STATE("ENABLE", $grpTrainTroops)
 		_GUI_Value_STATE("ENABLE", $grpCookSpell)
@@ -41,6 +42,13 @@ Func chkQuickTrainCombo()
 		ToolTip("QuickTrainCombo: " & @CRLF & "At least 1 Army Check is required! Default Army 1.")
 		Sleep(2000)
 		ToolTip('')
+	EndIf
+	If GUICtrlRead($g_ahChkArmy[2]) = $GUI_CHECKED And GUICtrlRead($g_hChkUseQuickTrain) = $GUI_CHECKED Then
+		_GUI_Value_STATE("HIDE", $g_hLblRemoveArmy & "#" & $g_hBtnRemoveArmy)
+		_GUI_Value_STATE("SHOW", $g_hChkMultiClick)
+	Else
+		_GUI_Value_STATE("HIDE", $g_hChkMultiClick)
+		_GUI_Value_STATE("SHOW", $g_hLblRemoveArmy & "#" & $g_hBtnRemoveArmy)
 	EndIf
 EndFunc   ;==>chkQuickTrainCombo
 

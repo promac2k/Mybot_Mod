@@ -18,12 +18,12 @@ Global $g_hGUI_TRAINARMY = 0
 Global $g_hGUI_TRAINARMY_TAB = 0, $g_hGUI_TRAINARMY_TAB_ITEM1 = 0, $g_hGUI_TRAINARMY_TAB_ITEM2 = 0, $g_hGUI_TRAINARMY_TAB_ITEM3 = 0, $g_hGUI_TRAINARMY_TAB_ITEM4 = 0
 
 ; Troops/Spells sub-tab
-Global $g_hChkUseQuickTrain = 0, $g_ahChkArmy[3] = [0, 0, 0]
+Global $g_hChkUseQuickTrain = 0, $g_ahChkArmy[3] = [0, 0, 0], $g_hLblRemoveArmy = 0, $g_hBtnRemoveArmy = 0
 Global $g_ahTxtTrainArmyTroopCount[$eTroopCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_ahLblTrainArmyTroopLevel[$eTroopCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_ahTxtTrainArmySpellCount[$eSpellCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_ahLblTrainArmySpellLevel[$eSpellCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-Global $g_hTxtFullTroop = 0, $g_hChkTotalCampForced = 0, $g_hTxtTotalCampForced = 0, $g_hChkForceBrewBeforeAttack = 0, $g_hChkDoubleTrain = 0
+Global $g_hTxtFullTroop = 0, $g_hChkTotalCampForced = 0, $g_hTxtTotalCampForced = 0, $g_hChkForceBrewBeforeAttack = 0, $g_hChkDoubleTrain = 0, $g_hChkMultiClick = 0
 
 Global $g_hGrpTrainTroops = 0, $g_hGrpCookSpell = 0
 Global $g_ahPicTrainArmyTroop[$eTroopCount] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -131,8 +131,11 @@ Func CreateTroopsSpellsSubTab()
 			If $i = 0 Then GUICtrlSetState(-1, $GUI_CHECKED)
 			GUICtrlSetOnEvent(-1, "chkQuickTrainCombo")
 		Next
-		GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Troops", "Btn_Remove_Army", "Remove Army"), $x + 335, $y + 20, -1, 15, $SS_LEFT)
-		_GUICtrlCreateIcon($g_sLibIconPath, $eIcnResetButton, $x + 405, $y + 17, 24, 24)
+		$g_hChkMultiClick = GUICtrlCreateCheckbox("Multi-click Army 3", $x + 120 + 3 * 60, $y + 20, -1, 15)
+			GUICtrlSetState(-1, $GUI_UNCHECKED)
+			GUICtrlSetState(-1, $GUI_HIDE)
+		$g_hLblRemoveArmy = GUICtrlCreateLabel(GetTranslatedFileIni("MBR GUI Design Child Attack - Troops", "Btn_Remove_Army", "Remove Army"), $x + 335, $y + 20, -1, 15, $SS_LEFT)
+		$g_hBtnRemoveArmy = _GUICtrlCreateIcon($g_sLibIconPath, $eIcnResetButton, $x + 405, $y + 17, 24, 24)
 			GUICtrlSetOnEvent(-1, "Removecamp")
 
 	$x = 10

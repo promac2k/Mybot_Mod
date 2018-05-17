@@ -1239,6 +1239,7 @@ Func ReadConfig_600_52_1()
 	$g_bQuickTrainArmy[0] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy1", "0") = "1")
 	$g_bQuickTrainArmy[1] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy2", "0") = "1")
 	$g_bQuickTrainArmy[2] = (IniRead($g_sProfileConfigPath, "troop", "QuickTrainArmy3", "0") = "1")
+	$g_bChkMultiClick = (IniRead($g_sProfileConfigPath, "troop", "MultiClickArmy3", "0") = "1")
 EndFunc   ;==>ReadConfig_600_52_1
 
 Func ReadConfig_600_52_2()

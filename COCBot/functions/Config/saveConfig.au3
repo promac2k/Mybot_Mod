@@ -1119,6 +1119,7 @@ Func SaveConfig_600_52_1()
 	_Ini_Add("troop", "QuickTrainArmy1", $g_bQuickTrainArmy[0] ? 1 : 0)
 	_Ini_Add("troop", "QuickTrainArmy2", $g_bQuickTrainArmy[1] ? 1 : 0)
 	_Ini_Add("troop", "QuickTrainArmy3", $g_bQuickTrainArmy[2] ? 1 : 0)
+	_Ini_Add("troop", "MultiClickArmy3", $g_bChkMultiClick ? 1 : 0)
 EndFunc   ;==>SaveConfig_600_52_1
 
 Func SaveConfig_600_52_2()
