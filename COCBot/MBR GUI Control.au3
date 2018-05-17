@@ -1629,6 +1629,54 @@ Func SetTime($bForceUpdate = False)
 		EndIf
 	EndIf
 	$DisplayLoop += 1
+
+	Local Static $DisplayLoop2 = 1
+
+	Local $sBuilderTime = ""
+	If $g_iBuilderTime >= 24 * 60 Then
+		$sBuilderTime = Int($g_iBuilderTime/24/60) & "d " & Round(Mod($g_iBuilderTime, 24*60)/60,0) & "h"
+	ElseIf $g_iBuilderTime >= 60 Then
+		$sBuilderTime = Int($g_iBuilderTime/60) & "h " & Round(Mod($g_iBuilderTime,60), 0) & "m"
+	ElseIf $g_iBuilderTime > 0 Then
+		$sBuilderTime = Int($g_iBuilderTime) & "m " & Round(Mod($g_iBuilderTime,1) * 60, 0) & "s"
+	EndIf
+
+	If Mod($DisplayLoop2, 5) = 0 Then
+		If Mod($DisplayLoop2, 10) = 0 Then
+			If $sBuilderTime <> "" Then
+				GUICtrlSetData($g_hLblResultBuilderNow, $sBuilderTime)
+			EndIf
+			If GUICtrlRead($g_hGUI_STATS_TAB, 1) = $g_hGUI_STATS_TAB_ITEM5 Then
+				For $i = 0 To $g_iTotalAcc ; Update time for all Accounts
+					Local $asBuilderTime = ""
+					If $g_aiBuilderTime[$i] >= 24 * 60 Then
+						$asBuilderTime = Int($g_aiBuilderTime[$i]/24/60) & "d " & Round(Mod($g_aiBuilderTime[$i], 24*60)/60,0) & "h"
+					ElseIf $g_aiBuilderTime[$i] >= 60 Then
+						$asBuilderTime = Int($g_aiBuilderTime[$i]/60) & "h " & Round(Mod($g_aiBuilderTime[$i],60), 0) & "'"
+					ElseIf $g_aiBuilderTime[$i] > 0 Then
+						$asBuilderTime = Int($g_aiBuilderTime[$i]) & "m" & Round(Mod($g_aiBuilderTime[$i],1) * 60, 0) & "s"
+					EndIf
+					If $asBuilderTime <> "" Then
+						GUICtrlSetData($g_ahLblResultBuilderNowAcc[$i], $asBuilderTime)
+						GUICtrlSetFont($g_ahLblResultBuilderNowAcc[$i], 8.5, $FW_NORMAL, Default, "Arial", $CLEARTYPE_QUALITY)
+					EndIf
+				Next
+			EndIf
+			$DisplayLoop2 = 1
+		Else
+			If $sBuilderTime <> "" Then GUICtrlSetData($g_hLblResultBuilderNow, $g_iFreeBuilderCount & "/" & $g_iTotalBuilderCount)
+			If GUICtrlRead($g_hGUI_STATS_TAB, 1) = $g_hGUI_STATS_TAB_ITEM5 Then
+				For $i = 0 To $g_iTotalAcc ; Update time for all Accounts
+					If $g_aiBuilderTime[$i] > 0 Then
+						GUICtrlSetData($g_ahLblResultBuilderNowAcc[$i], $g_aiFreeBuilderCountAcc[$i] & "/" & $g_aiTotalBuilderCountAcc[$i])
+						GUICtrlSetFont($g_ahLblResultBuilderNowAcc[$i], 9, $FW_BOLD, Default, "Arial", $CLEARTYPE_QUALITY)
+					EndIf
+				Next
+			EndIf
+		EndIf
+	EndIf
+	$DisplayLoop2 += 1
+
 EndFunc   ;==>SetTime
 
 Func tabMain()

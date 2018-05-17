@@ -1395,7 +1395,7 @@ Func CreateMultiStatsSubTab()
 
 			; Village report (info)
 			GUICtrlCreateIcon($g_sLibIconPath, $eIcnBuilder, $x + $delX1 + $i_X * $delX2 + 10, $y + $delY + $i_Y * $delY2, 16, 14)
-			$g_ahLblResultBuilderNowAcc[$i] = GUICtrlCreateLabel("", $x + $delX1 + 30 + $i_X * $delX2, $y + $delY + $i_Y * $delY2, 30, 17, $SS_LEFT)
+			$g_ahLblResultBuilderNowAcc[$i] = GUICtrlCreateLabel("", $x + $delX1 + 30 + $i_X * $delX2, $y + $delY + $i_Y * $delY2, 60, 17, $SS_LEFT)
 				GUICtrlSetFont(-1, 9, $FW_BOLD, Default, "Arial", $CLEARTYPE_QUALITY)
 				GUICtrlSetColor(-1, $COLOR_BLACK)
 

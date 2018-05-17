@@ -1654,3 +1654,6 @@ Global $g_iPurgeJobCount[8] = [0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_iPurgeMax = 5 ; [0] is unlimited , 1-10
 
 Global $g_bChkCollectFreeMagicItems = True
+
+Global $g_iBuilderTime = 0
+Global $g_aiBuilderTime[8] = [0, 0, 0, 0, 0, 0, 0, 0]

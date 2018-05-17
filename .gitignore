@@ -126,6 +126,7 @@
 ![Ii]mgxml/other/SwitchAccounts/ListAccounts/*.png
 ![Ii]mgxml/other/GrandWardenMode/GrandWardenHeal/*.png
 ![Ii]mgxml/other/GrandWardenMode/GrandWardenAir/*.png
+![Ii]mgxml/BuilderTime/*.png
 
 # ignore test strategies
 [Ss]trategies/[Tt]est*.ini
