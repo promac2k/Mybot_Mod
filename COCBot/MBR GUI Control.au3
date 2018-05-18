@@ -1650,15 +1650,15 @@ Func SetTime($bForceUpdate = False)
 				For $i = 0 To $g_iTotalAcc ; Update time for all Accounts
 					Local $asBuilderTime = ""
 					If $g_aiBuilderTime[$i] >= 24 * 60 Then
-						$asBuilderTime = Int($g_aiBuilderTime[$i]/24/60) & "d " & Round(Mod($g_aiBuilderTime[$i], 24*60)/60,0) & "h"
+						$asBuilderTime = Int($g_aiBuilderTime[$i]/24/60) & "d" & Round(Mod($g_aiBuilderTime[$i], 24*60)/60,0) & "h"
 					ElseIf $g_aiBuilderTime[$i] >= 60 Then
-						$asBuilderTime = Int($g_aiBuilderTime[$i]/60) & "h " & Round(Mod($g_aiBuilderTime[$i],60), 0) & "'"
+						$asBuilderTime = Int($g_aiBuilderTime[$i]/60) & "h" & Round(Mod($g_aiBuilderTime[$i],60), 0) & "'"
 					ElseIf $g_aiBuilderTime[$i] > 0 Then
-						$asBuilderTime = Int($g_aiBuilderTime[$i]) & "m" & Round(Mod($g_aiBuilderTime[$i],1) * 60, 0) & "s"
+						$asBuilderTime = Int($g_aiBuilderTime[$i]) & "m" & Round(Mod($g_aiBuilderTime[$i],1) * 60, 0) & """"
 					EndIf
 					If $asBuilderTime <> "" Then
 						GUICtrlSetData($g_ahLblResultBuilderNowAcc[$i], $asBuilderTime)
-						GUICtrlSetFont($g_ahLblResultBuilderNowAcc[$i], 8.5, $FW_NORMAL, Default, "Arial", $CLEARTYPE_QUALITY)
+						GUICtrlSetFont($g_ahLblResultBuilderNowAcc[$i], 9, $FW_NORMAL, Default, "Arial", $CLEARTYPE_QUALITY)
 					EndIf
 				Next
 			EndIf
