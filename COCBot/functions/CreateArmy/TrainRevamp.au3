@@ -152,7 +152,12 @@ Func TrainRevampOldStyle()
 
 	CheckIfArmyIsReady()
 
-	If $g_bDoubleTrainDone And $g_bDoubleTrain Then Return
+	If $g_bDoubleTrainDone And $g_bDoubleTrain Then
+		If $g_bDebugSetlogTrain Then SetLog("Double train already done, let's skip training" )
+		If _Sleep(250) Then Return
+		ClickP($aAway, 2, 0, "#0346") ;Click Away
+		Return
+	EndIf
 
 	If ThSnipesSkiptrain() Then Return
 
