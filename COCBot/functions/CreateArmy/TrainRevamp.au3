@@ -34,7 +34,7 @@ Func TrainRevamp()
 	If ProfileSwitchAccountEnabled() Then $g_bDoubleTrainDone = $g_abDoubleTrainDone[$g_iCurAccount]
 	If Not $g_bQuickTrainEnable Then
 		If $g_bIsFullArmywithHeroesAndSpells And $g_bDoubleTrainDone Then $g_bDoubleTrainDone = False
-		If Not $g_bDoubleTrainDone Or Not $g_bDoubleTrain Then TrainRevampOldStyle()
+		TrainRevampOldStyle()
 		DoubleTrain()
 		Return
 	EndIf
@@ -151,6 +151,8 @@ Func TrainRevampOldStyle()
 	If $g_iActiveDonate = -1 Then PrepareDonateCC()
 
 	CheckIfArmyIsReady()
+
+	If $g_bDoubleTrainDone And $g_bDoubleTrain Then Return
 
 	If ThSnipesSkiptrain() Then Return
 

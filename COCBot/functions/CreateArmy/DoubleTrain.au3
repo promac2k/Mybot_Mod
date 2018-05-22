@@ -21,7 +21,7 @@ Func DoubleTrain()
 	Local $bSetlog = True
 	If $g_bDoubleTrainDone Then $bSetlog = False
 
-	If $bSetlog Then SetLog("Double train army")
+	If $bSetlog Or $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Double train army")
 	StartGainCost()
 	OpenArmyOverview(False, "DoubleTrain()")
 
