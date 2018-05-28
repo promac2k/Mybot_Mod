@@ -497,6 +497,7 @@ Func CreateTroopsSpellsSubTab()
 
 		; DoubleTrain - Demen
 		$g_hChkDoubleTrain = GUICtrlCreateCheckbox("Double Train Army", $x + 275, $y, -1, 15)
+			_GUICtrlSetTip(-1, "Train 2nd set of troops & spells after training 1st combo" & @CRLF & "Make sure to enter correct 'Total Camp', 'Total Spell' and number of troops/spells in your setting")
 
 	$y += 13
 		; Lightning
