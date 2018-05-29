@@ -75,7 +75,6 @@ Func DoubleTrain()
 	$Step = 1
 	While 1
 		Local $SpellCamp = GetCurrentArmy(43, 160)
-
 		If $bSetlog Or $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Checking Spell tab: " & $SpellCamp[0] & "/" & $SpellCamp[1] * 2)
 		If $SpellCamp[1] = 0 Then ExitLoop
 
@@ -125,6 +124,8 @@ Func DoubleTrain()
 			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("$bNeedReCheckTroopTab: " & $bNeedReCheckTroopTab & "$bNeedReCheckSpellTab: " & $bNeedReCheckSpellTab, $COLOR_DEBUG)
 		EndIf
 
+		Local $bForceBrewSpells = $g_bForceBrewSpells
+		$g_bForceBrewSpells = True
 		Local $aWhatToTrain = WhatToTrain()
 		If $bNeedReCheckTroopTab Then
 			TrainUsingWhatToTrain($aWhatToTrain) ; troop
@@ -136,6 +137,7 @@ Func DoubleTrain()
 			$bDoubleTrainSpell = TrainFullQueue(True, $bSetlog)
 			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("TrainFullQueue(). $bDoubleTrainSpell: " & $bDoubleTrainSpell, $COLOR_DEBUG)
 		EndIf
+		$g_bForceBrewSpells = $bForceBrewSpells
 	EndIf
 
 	If _Sleep(250) Then Return
@@ -176,16 +178,12 @@ Func TrainFullQueue($bSpellOnly = False, $bSetlog = True)
 	If $ToReturn[0][0] = "Arch" And $ToReturn[0][1] = 0 Then Return False; Error
 
 	Local $bIsFullArmywithHeroesAndSpells = $g_bIsFullArmywithHeroesAndSpells
-	Local $bForceBrewSpells = $g_bForceBrewSpells
-
 	$g_bIsFullArmywithHeroesAndSpells = True
-	$g_bForceBrewSpells = True
 
 	TrainUsingWhatToTrain($ToReturn, $bSpellOnly)
 	If _Sleep($bSpellOnly ? 1000 : 500) Then Return
 
 	$g_bIsFullArmywithHeroesAndSpells = $bIsFullArmywithHeroesAndSpells
-	$g_bForceBrewSpells = $bForceBrewSpells
 
 	Local $CampOCR = GetCurrentArmy(43, 160)
 	If $bSetlog Or $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("Checking " & ($bSpellOnly ? "spell tab: " : "troop tab: ") & $CampOCR[0] & "/" & $CampOCR[1] * 2)
@@ -242,7 +240,7 @@ Func FillTroopCamp($iRemaining)
 
 	TrainUsingWhatToTrain($ToTrain)
 
-EndFunc
+EndFunc   ;==>FillTroopCamp
 
 Func FillSpellCamp($iRemaining)
 	Local $ToTrain[1][2] = [["Arch", 0]]
@@ -286,7 +284,7 @@ Func FillSpellCamp($iRemaining)
 
 	TrainUsingWhatToTrain($ToTrain, True)
 
-EndFunc
+EndFunc   ;==>FillSpellCamp
 
 Func DoubleQuickTrain()
 
