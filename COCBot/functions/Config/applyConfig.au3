@@ -412,12 +412,25 @@ Func ApplyConfig_600_11($TypeReadSave)
 			For $i = 0 To 23
 				GUICtrlSetState($g_ahChkRequestCCHours[$i], $g_abRequestCCHours[$i] ? $GUI_CHECKED : $GUI_UNCHECKED)
 			Next
+
+			; Request troops for defense (Demen)
+			GUICtrlSetState($g_hChkRequestTroopsEnableDefense, $g_bRequestTroopsEnableDefense ? $GUI_CHECKED : $GUI_UNCHECKED)
+			chkRequestDefense()
+			GUICtrlSetData($g_hTxtRequestCCDefense, $g_sRequestTroopsTextDefense)
+			GUICtrlSetData($g_hTxtRequestDefenseEarly, $g_iRequestDefenseEarly)
+
 		Case "Save"
 			$g_bRequestTroopsEnable = (GUICtrlRead($g_hChkRequestTroopsEnable) = $GUI_CHECKED)
 			$g_sRequestTroopsText = GUICtrlRead($g_hTxtRequestCC)
 			For $i = 0 To 23
 				$g_abRequestCCHours[$i] = (GUICtrlRead($g_ahChkRequestCCHours[$i]) = $GUI_CHECKED)
 			Next
+
+			; Request troops for defense (Demen)
+			$g_bRequestTroopsEnableDefense = (GUICtrlRead($g_hChkRequestTroopsEnableDefense) = $GUI_CHECKED)
+			$g_sRequestTroopsTextDefense = GUICtrlRead($g_hTxtRequestCCDefense)
+			$g_iRequestDefenseEarly = GUICtrlRead($g_hTxtRequestDefenseEarly)
+
 	EndSwitch
 EndFunc   ;==>ApplyConfig_600_11
 

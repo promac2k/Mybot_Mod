@@ -785,6 +785,7 @@ Global $g_bChkCollectBuilderBase = False, $g_bChkStartClockTowerBoost = False, $
 Global $g_bRequestTroopsEnable = False
 Global $g_sRequestTroopsText = ""
 Global $g_abRequestCCHours[24] = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+Global $g_bRequestTroopsEnableDefense, $g_sRequestTroopsTextDefense, $g_iRequestDefenseEarly ; Request troops for defense (Demen)
 
 ; <><><><> Village / Donate - Donate <><><><>
 Global $g_bChkDonate = True

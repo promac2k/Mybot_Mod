@@ -22,6 +22,7 @@ Global $g_hChkRequestCCHoursE1 = 0, $g_hChkRequestCCHoursE2 = 0
 Global $g_hGrpRequestCC = 0, $g_hLblRequestCCHoursAM = 0, $g_hLblRequestCCHoursPM = 0
 Global $g_hLblRequestCChour = 0, $g_ahLblRequestCChoursE = 0
 GLobal $g_hLblRequestCChours[12] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Global $g_hChkRequestTroopsEnableDefense, $g_hTxtRequestCCDefense, $g_hTxtRequestDefenseEarly
 
 ; Donate
 Global $g_hChkExtraAlphabets = 0, $g_hChkExtraChinese = 0, $g_hChkExtraKorean = 0, $g_hChkExtraPersian = 0
@@ -107,9 +108,19 @@ Func CreateRequestSubTab()
 		_GUICtrlCreateIcon($g_sLibIconPath, $eIcnCCRequest, $x - 5, $y, 64, 64, $BS_ICON)
 		$g_hChkRequestTroopsEnable = GUICtrlCreateCheckbox(GetTranslatedFileIni("MBR GUI Design Child Village - Donate-CC", "ChkRequestTroopsEnable", "Request Troops / Spells"), $x + 40 + 30, $y - 6)
 			GUICtrlSetOnEvent(-1, "chkRequestCCHours")
-		$g_hTxtRequestCC = GUICtrlCreateInput(GetTranslatedFileIni("MBR GUI Design Child Village - Donate-CC", "TxtRequestCC", "Anything please"), $x + 40 + 30, $y + 15, 214, 20, BitOR($SS_CENTER, $ES_AUTOHSCROLL))
+		$g_hTxtRequestCC = GUICtrlCreateInput(GetTranslatedFileIni("MBR GUI Design Child Village - Donate-CC", "TxtRequestCC", "Anything please"), $x + 40 + 30, $y + 15, 155, 20, BitOR($SS_CENTER, $ES_AUTOHSCROLL))
 			GUICtrlSetState(-1, $GUI_DISABLE)
 			_GUICtrlSetTip(-1, GetTranslatedFileIni("MBR GUI Design Child Village - Donate-CC", "TxtRequestCC_Info_01", "This text is used on your request for troops in the Clan chat."))
+
+		; Request troops for defense (Demen)
+		$g_hChkRequestTroopsEnableDefense = GUICtrlCreateCheckbox("Request Defense troops", $x + 235, $y - 6)
+			GUICtrlSetOnEvent(-1, "chkRequestDefense")
+		$g_hTxtRequestCCDefense = GUICtrlCreateInput("Defense troop please", $x + 235, $y + 15, 155, 20, BitOR($SS_CENTER, $ES_AUTOHSCROLL))
+		GUICtrlCreateLabel("When shield time < ", $x + 251, $y + 40, -1, 15)
+		GUICtrlCreateLabel("min", $x + 374, $y + 40, -1, 15)
+		$g_hTxtRequestDefenseEarly = GUICtrlCreateInput("0", $x + 346, $y + 40, 25, 16, $SS_CENTER)
+			GUICtrlSetLimit(-1, 3)
+			GUICtrlSetBkColor(-1, $COLOR_MONEYGREEN)
 
 	$x += 29 + 30
 	$y += 60

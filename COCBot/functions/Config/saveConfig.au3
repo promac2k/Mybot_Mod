@@ -393,6 +393,12 @@ Func SaveConfig_600_11()
 		$string &= ($g_abRequestCCHours[$i] ? "1" : "0") & "|"
 	Next
 	_Ini_Add("planned", "RequestHours", $string)
+
+	; Request troops for defense (Demen)
+	_Ini_Add("RequestDefense", "RequestDefenseEnable", $g_bRequestTroopsEnableDefense ? 1 : 0)
+	_Ini_Add("RequestDefense", "txtRequestDefense", $g_sRequestTroopsTextDefense)
+	_Ini_Add("RequestDefense", "RequestDefenseEarly", $g_iRequestDefenseEarly)
+
 EndFunc   ;==>SaveConfig_600_11
 
 Func SaveConfig_600_12()
