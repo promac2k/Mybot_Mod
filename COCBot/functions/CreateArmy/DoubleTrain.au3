@@ -27,6 +27,8 @@ Func DoubleTrain()
 
 	Local $bNeedReCheckTroopTab = False, $bNeedReCheckSpellTab = False
 	Local $bDoubleTrainTroop = False, $bDoubleTrainSpell = False
+	Local $bIsFullArmywithHeroesAndSpells = $g_bIsFullArmywithHeroesAndSpells
+	$g_bIsFullArmywithHeroesAndSpells = False ; this is to force RemoveExtraTroopsQueue()
 
 	; Troop
 	OpenTroopsTab(False, "DoubleTrain()")
@@ -43,9 +45,10 @@ Func DoubleTrain()
 				Setlog("Not full camp. Trying to top-up for donating", $COLOR_ACTION)
 				FillTroopCamp($TroopCamp[2])
 				$bDoubleTrainTroop = TrainFullQueue(False, $bSetlog)
+				If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". FillTroopCamp() then TrainFullQueue(). $bDoubleTrainTroop: " & $bDoubleTrainTroop, $COLOR_DEBUG)
 				ExitLoop
 			EndIf
-			DeleteQueued("Troops")
+			If Not IsQueueEmpty("Troops", False, False) Then DeleteQueued("Troops")
 			$bNeedReCheckTroopTab = True
 			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". DeleteQueued('Troops'). $bNeedReCheckTroopTab: " & $bNeedReCheckTroopTab, $COLOR_DEBUG)
 
@@ -83,9 +86,10 @@ Func DoubleTrain()
 				Setlog("Not full spell camp. Trying to top-up for donating", $COLOR_ACTION)
 				FillSpellCamp($SpellCamp[2])
 				$bDoubleTrainSpell = TrainFullQueue(True, $bSetlog)
+				If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". FillSpellCamp() then TrainFullQueue(True). $bDoubleTrainSpell: " & $bDoubleTrainSpell, $COLOR_DEBUG)
 				ExitLoop
 			EndIf
-			DeleteQueued("Spells")
+			If Not IsQueueEmpty("Spells", False, False) Then DeleteQueued("Spells")
 			$bNeedReCheckSpellTab = True
 			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog($Step & ". DeleteQueued('Spells'). $bNeedReCheckSpellTab: " & $bNeedReCheckSpellTab, $COLOR_DEBUG)
 
@@ -124,8 +128,6 @@ Func DoubleTrain()
 			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("$bNeedReCheckTroopTab: " & $bNeedReCheckTroopTab & "$bNeedReCheckSpellTab: " & $bNeedReCheckSpellTab, $COLOR_DEBUG)
 		EndIf
 
-		Local $bForceBrewSpells = $g_bForceBrewSpells
-		$g_bForceBrewSpells = True
 		Local $aWhatToTrain = WhatToTrain()
 		If $bNeedReCheckTroopTab Then
 			TrainUsingWhatToTrain($aWhatToTrain) ; troop
@@ -137,7 +139,6 @@ Func DoubleTrain()
 			$bDoubleTrainSpell = TrainFullQueue(True, $bSetlog)
 			If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("TrainFullQueue(). $bDoubleTrainSpell: " & $bDoubleTrainSpell, $COLOR_DEBUG)
 		EndIf
-		$g_bForceBrewSpells = $bForceBrewSpells
 	EndIf
 
 	If _Sleep(250) Then Return
@@ -148,6 +149,7 @@ Func DoubleTrain()
 	If $g_bDebugSetlogTrain Or $g_bDebugSetlog Then SetLog("$g_bDoubleTrainDone: " & $g_bDoubleTrainDone, $COLOR_DEBUG)
 
 	If ProfileSwitchAccountEnabled() Then $g_abDoubleTrainDone[$g_iCurAccount] = $g_bDoubleTrainDone
+	$g_bIsFullArmywithHeroesAndSpells = $bIsFullArmywithHeroesAndSpells ; release
 
 	EndGainCost("Double Train")
 
