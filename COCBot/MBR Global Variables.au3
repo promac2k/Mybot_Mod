@@ -1654,3 +1654,7 @@ Global $g_iPurgeJobCount[8] = [0, 0, 0, 0, 0, 0, 0, 0]
 Global $g_iPurgeMax = 5 ; [0] is unlimited , 1-10
 
 Global $g_bChkCollectFreeMagicItems = True
+
+; Slot11 - Demen_S11_#9003
+Global $g_abChkExtendedAttackBar[2] = [True, True]
+Global $g_iTotalAttackSlot = 10, $g_bDraggedAttackBar = False ; flag if AttackBar is dragged or not
